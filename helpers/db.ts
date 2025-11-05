@@ -20,6 +20,7 @@ export async function connectToDatabase() {
 export async function queryDatabase(query: string) {
     const result = await client.query(query);
     console.log(result.rows);
+    return result.rows;
 }
 
 export async function closeDatabaseConnection() {
@@ -46,10 +47,14 @@ export async function insertUsersQuery() {
             ('Piotr', 'Wiśniewski', '+48345678901', 'piotr.wisniewski@example.com'),
             ('Maria', 'Wójcik', '+48456789012', 'maria.wojcik@example.com'),
             ('Krzysztof', 'Kamiński', '+48567890123', 'krzysztof.kaminski@example.com')
-        ON CONFLICT (surname) DO NOTHING
+        ON CONFLICT (email) DO NOTHING
     `);
 }
 
 export async function selectAllUsersQuery() {
-    await queryDatabase(`SELECT * FROM users`);
+    return await queryDatabase(`SELECT * FROM users`);
+}
+
+export async function deleteAllUsersQuery() {
+    return await queryDatabase(`DELETE FROM users`);
 }
